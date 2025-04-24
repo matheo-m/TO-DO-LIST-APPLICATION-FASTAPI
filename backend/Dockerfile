@@ -4,8 +4,8 @@ FROM python:3
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the application source code into the container
-COPY . .
+# Copy the requirements file into the container
+COPY requirements.txt .
 
 # Install the dependencies
 RUN pip install --no-cache-dir --upgrade -r ./requirements.txt

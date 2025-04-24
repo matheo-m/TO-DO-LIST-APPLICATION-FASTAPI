@@ -9,10 +9,10 @@ services:
     depends_on:
       - backend
       - frontend
+    restart: unless-stopped
   frontend:
-    image: "node:22"
-    user: "node"
-    working_dir: /home/node/app
+    build: ./frontend
+    working_dir: /home/node/app/
     environment:
       - NODE_ENV=development
       - WDS_SOCKET_PORT=0
@@ -21,8 +21,11 @@ services:
     expose:
       - "3000"
     ports:
-      - "3000:3000"
+      - "3001:3000"
+    depends_on:
+      - backend
     command: "npm start"
+    restart: unless-stopped
   backend:
     image: todo-app/backend
     build: ./backend
@@ -38,3 +41,4 @@ services:
     env_file:
       - path: ./.env
         required: true
+    restart: unless-stopped
