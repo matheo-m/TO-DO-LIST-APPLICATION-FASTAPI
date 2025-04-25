@@ -1,20 +1,17 @@
-# Utiliser l'image officielle Node.js
 FROM node:18
 
-# Définir le répertoire de travail dans le container
-WORKDIR /home/node/app
+# Set working directory
+WORKDIR /app
 
-# Copier package.json et package-lock.json pour installer les dépendances
-COPY ./package*.json ./
-
-# Installer les dépendances de l'application
+# Copy package files and install deps
+COPY package*.json ./
 RUN npm install
 
-# Copier tout le reste du code dans le container
-COPY ./ /home/node/app
+# Copy rest of the frontend
+COPY . .
 
-# Exposer le port 3000
+# Expose the React dev server port
 EXPOSE 3000
 
-# Lancer l'application React
+# Start the app with host binding
 CMD ["npm", "start"]

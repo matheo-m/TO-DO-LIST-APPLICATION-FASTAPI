@@ -2,33 +2,20 @@ name: todo-app
 services:
   frontend:
     build: ./frontend
-    working_dir: /home/node/app/
+    ports:
+      - "3000:3000"
     environment:
       - NODE_ENV=development
-      - WDS_SOCKET_PORT=0
-    volumes:
-      - ./frontend/:/home/node/app
-    expose:
-      - "3000"
-    ports:
-      - "3001:3000"
     depends_on:
       - backend
-    command: "npm start"
-    restart: unless-stopped
+    command: npm start
+
   backend:
-    image: todo-app/backend
     build: ./backend
-    volumes:
-      - ./backend/:/usr/src/app
-    expose:
-      - "3001"
     ports:
-      - "8001:3001"
-    command: "python src/server.py"
+      - "3001:3001"
     environment:
       - DEBUG=true
     env_file:
-      - path: ./.env
-        required: true
-    restart: unless-stopped
+      - .env
+    command: python src/server.py
