@@ -9,3 +9,4 @@ services:
     env_file:
       - .env
     command: python src/server.py
+    restart: unless-stopped
